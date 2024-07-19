@@ -1,0 +1,69 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+
+// Options dans tsconfig.json
+// Voici une explication de certaines des options importantes dans votre fichier tsconfig.json :
+
+// lib : Spécifie les bibliothèques que vous souhaitez inclure dans votre compilation. ["dom", "dom.iterable", "esnext"] inclut les types pour les API du navigateur, les itérateurs du DOM et les fonctionnalités les plus récentes de JavaScript.
+
+// allowJs : Permet de compiler des fichiers .js en plus des fichiers .ts et .tsx.
+
+// skipLibCheck : Ignore la vérification des types dans les fichiers de déclaration (.d.ts), ce qui peut améliorer les temps de compilation.
+
+// strict : Active toutes les vérifications de type strictes.
+
+// noEmit : Empêche TypeScript de générer des fichiers de sortie (.js), utile si vous utilisez un autre outil pour la construction.
+
+// esModuleInterop : Active la compatibilité avec les modules ES, ce qui permet d'importer des modules CommonJS.
+
+// module : Spécifie le système de module à utiliser. "esnext" signifie que TypeScript émet des modules ES.
+
+// moduleResolution : Spécifie la stratégie de résolution de module. "bundler" est souvent utilisé avec des outils comme Webpack ou Next.js.
+
+// resolveJsonModule : Permet d'importer des fichiers .json.
+
+// isolatedModules : Assure que chaque fichier est traité comme un module isolé.
+
+// jsx : Contrôle la manière dont les fichiers JSX sont traités. "preserve" signifie que JSX n'est pas transformé et doit être laissé intact pour un autre outil (comme Babel ou Webpack) pour le transformer.
+
+// incremental : Active la compilation incrémentielle pour améliorer les temps de recompilation.
+
+// plugins : Spécifie des plugins TypeScript supplémentaires, comme "next" pour des projets Next.js.
+
+// paths : Configure les alias de module pour faciliter les importations dans votre projet.
+
+// include : Spécifie les fichiers à inclure dans la compilation.
+
+// exclude : Spécifie les fichiers à exclure de la compilation.
+
+// Explication de target
+// target : Spécifie la version de JavaScript que TypeScript doit générer. Les options courantes incluent :
+// "es5" : Génère du code compatible avec ECMAScript 5.
+// "es6" ou "es2015" : Génère du code compatible avec ECMAScript 2015.
+// "es2016" à "es2021" : Génère du code compatible avec les versions plus récentes de ECMAScript.
+// "esnext" : Génère du code en utilisant les dernières fonctionnalités proposées par ECMAScript.
