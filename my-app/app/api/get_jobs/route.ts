@@ -95,7 +95,12 @@ export const GET = async (req: Request) => {
     // contentSite,
   });
 };
-//
+// 2reme scrapping sur le site wwr de la meme maniere 
+const getWorkRemotlyJobs = async (instance: Browser) => {
+  const page = await instance.newPage();
+  await page.goto("https://weworkremotely.com/categories/remote-full-stack-programming-jobs#job-listings");
+
+ // 1er scrapping  
 const getRemoteOkJobs = async (instance: Browser) => {
   const page = await instance.newPage();
   await page.goto("https://remoteok.com/remote-engineer-jobs?order_by=date");
