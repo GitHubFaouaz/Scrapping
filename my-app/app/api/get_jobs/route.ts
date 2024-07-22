@@ -1,4 +1,5 @@
 // pages/api/get_jobs.ts
+
 import { NextResponse } from "next/server";
 import { Browser, chromium } from "playwright";
 import { Jobs } from "@prisma/client";
@@ -95,18 +96,83 @@ export const GET = async (req: Request) => {
     // contentSite,
   });
 };
-// 2reme scrapping sur le site wwr de la meme maniere 
-const getWorkRemotlyJobs = async (instance: Browser) => {
-  const page = await instance.newPage();
-  await page.goto("https://weworkremotely.com/categories/remote-full-stack-programming-jobs#job-listings");
 
- // 1er scrapping  
+//------------------------------------------------ 1er scrapping
 const getRemoteOkJobs = async (instance: Browser) => {
   const page = await instance.newPage();
   await page.goto("https://remoteok.com/remote-engineer-jobs?order_by=date");
 
   // on cible le tr de la page remoteok.com
   const jobs = await page.$$eval("tr", (rows) => {
+    return rows.map((row) => {
+      // pour eviter dafficher des pubs on filtre avant
+      if (row.classList.contains("ad")) return; // on retourne que ce qui contient la classList ad
+      // ligne avec info par defaut a afficher
+      const obj = {
+        title: "",
+        company: "",
+        date: new Date(),
+        logo: "",
+        salary: "",
+        url: "",
+      } as Jobs; // on se base sur le jobs du schema.prisma
+
+      // recuperation h2 de la page
+      const h2Title = row.querySelector("h2"); // h2 de la page
+      if (h2Title) {
+        obj.title = h2Title.textContent?.trim() ?? "";
+      }
+      // recuperation de la company
+      const h3Company = row.querySelector("h2");
+      if (h3Company) {
+        obj.company = h3Company.textContent?.trim() ?? "";
+      }
+
+      //recuperation de limage
+      const hasLogoElement = row.querySelector(".has-logo"); // dans balise td
+      if (hasLogoElement) {
+        const img = hasLogoElement.querySelector("img");
+        obj.logo = img?.getAttribute("src") ?? ""; // on envoi img et si nul ''
+      }
+
+      //recuperatiino de l'url
+      const url = row.getAttribute("data-url");
+      if (url) {
+        obj.url = "https://remoteok.com" + url;
+      }
+
+      // recuperation du salaire
+      const locationElement = row.querySelectorAll(".location");
+      for (const locationElementOne of locationElement) {
+        const location = locationElementOne.textContent?.trim() ?? "";
+        if (location.startsWith("💰")) {
+          //WIN + ; pour les emojie
+          obj.salary = location;
+        }
+      }
+      return obj;
+    });
+  });
+  // on filtre si les elements sont undefied
+  const JobsFiltered = jobs.filter((job) => {
+    if (!job) return false;
+    if (!job?.title) return false;
+    if (!job?.url) return false;
+    if (!job?.company) return false;
+    return true;
+  });
+  return JobsFiltered;
+};
+
+//------------------------------------------ 2reme scrapping sur le site wwr de la meme maniere
+const getWorkRemotlyJobs = async (instance: Browser) => {
+  const page = await instance.newPage();
+  await page.goto(
+    "https://weworkremotely.com/categories/remote-full-stack-programming-jobs#job-listings"
+  );
+
+  // on cible la class article li  de la page
+  const jobs = await page.$$eval("article li", (rows) => {
     return rows.map((row) => {
       // pour eviter dafficher des pubs on filtre avant
       if (row.classList.contains("ad")) return; // on retourne que ce qui contient la classList ad
