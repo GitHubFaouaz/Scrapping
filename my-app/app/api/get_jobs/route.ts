@@ -98,7 +98,7 @@ export const GET = async (req: Request) => {
   });
 };
 
-//------------------------------------------------ 1er scrapping
+//------------------------------------------------ 1er scrapping(https://remoteok.com/)
 const getRemoteOkJobs = async (instance: Browser) => {
   const page = await instance.newPage();
   await page.goto("https://remoteok.com/remote-engineer-jobs?order_by=date");
@@ -124,15 +124,15 @@ const getRemoteOkJobs = async (instance: Browser) => {
         obj.title = h2Title.textContent?.trim() ?? "";
       }
       // recuperation de la company
-      const h3Company = row.querySelector("h2");
-      if (h3Company) {
-        obj.company = h3Company.textContent?.trim() ?? "";
+      const company = row.querySelector("h2");
+      if (company) {
+        obj.company = company.textContent?.trim() ?? "";
       }
 
       //recuperation de limage
-      const hasLogoElement = row.querySelector(".has-logo"); // dans balise td
-      if (hasLogoElement) {
-        const img = hasLogoElement.querySelector("img");
+      const divLogo = row.querySelector(".has-logo"); // dans balise td
+      if (divLogo) {
+        const img = divLogo.querySelector("img");
         obj.logo = img?.getAttribute("src") ?? ""; // on envoi img et si nul ''
       }
 
@@ -165,7 +165,7 @@ const getRemoteOkJobs = async (instance: Browser) => {
   return JobsFiltered;
 };
 
-//------------------------------------------ 2reme scrapping sur le site wwr de la meme maniere
+//------------------------------------------ 2reme scrapping (https://weworkremotely.com/)
 const getWorkRemotlyJobs = async (instance: Browser) => {
   const page = await instance.newPage();
   await page.goto(
@@ -188,21 +188,22 @@ const getWorkRemotlyJobs = async (instance: Browser) => {
       } as Jobs; // on se base sur le jobs du schema.prisma
 
       // recuperation h2 de la page
-      const h2Title = row.querySelector("h2"); // h2 de la page
-      if (h2Title) {
-        obj.title = h2Title.textContent?.trim() ?? "";
+      const title = row.querySelector(".title"); // h2 de la page
+      if (title) {
+        obj.title = title.textContent?.trim() ?? "";
       }
       // recuperation de la company
-      const h3Company = row.querySelector("h2");
-      if (h3Company) {
-        obj.company = h3Company.textContent?.trim() ?? "";
+      const company = row.querySelector(".company");
+      if (company) {
+        obj.company = company.textContent?.trim() ?? "";
       }
 
-      //recuperation de limage
-      const hasLogoElement = row.querySelector(".has-logo"); // dans balise td
-      if (hasLogoElement) {
-        const img = hasLogoElement.querySelector("img");
-        obj.logo = img?.getAttribute("src") ?? ""; // on envoi img et si nul ''
+      //recuperation de limage (logo)
+      const divLogo = row.querySelector(".flag-logo") as HTMLDivElement; // de la div
+      if (divLogo) {
+        const backgroundImage = divLogo.style.backgroundImage;
+        const img = backgroundImage?.replace("url(", "").replace(")", "");
+        obj.logo = img;
       }
 
       //recuperatiino de l'url
