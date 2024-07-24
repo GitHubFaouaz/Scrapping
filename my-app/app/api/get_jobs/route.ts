@@ -77,23 +77,24 @@ export const GET = async (req: Request) => {
   // pour démarrer un navigateur sans interface graphique (headless browser) et ouvrir une nouvelle page dans ce navigateur
   // Lancer le navigateur
   const browser = await chromium.launch();
-  const jobs = await getRemoteOkJobs(browser);
+  const remotejobs = await getRemoteOkJobs(browser); // pour  1er scrapping
+  const workRemoteJobs = await getWorkRemotlyJobs(browser); //pour le 2eme scrapping
   // console.log(contentSite);
 
   // Filtrer les valeurs undefined
-  const filteredJobs = jobs.filter((job) => job !== undefined);
+  const filteredJobs = remotejobs.filter((job) => job !== undefined);
   // on insere les données dans la base de donnée avec createMany au lieu de create ; la méthode createMany pour insérer plusieurs enregistrements.
   if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
     await prisma.jobs.createMany({
       data: filteredJobs,
     });
   } else {
-    console.error("The jobs variable is not an array or is empty");
+    console.error("The remotejobs variable is not an array or is empty");
   }
 
   return NextResponse.json({
-    jobs,
-    // contentSite,
+    // remotejobs,//http://localhost:3000/api/get_jobs
+    workRemoteJobs,
   });
 };
 
