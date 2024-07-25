@@ -5,84 +5,21 @@ import { Browser, chromium } from "playwright";
 import { Jobs } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
-// export const GET = async (req: Request) => {
-//   try {
-//     // Lancer le navigateur
-//     const browser = await chromium.launch();
-//     const page = await browser.newPage();
-
-//     // Naviguer vers la page web
-//     await page.goto("https://remoteok.com/remote-engineer-jobs?order_by=date");
-
-//     // Extraire les informations des offres d'emploi
-//     const jobs = await page.$$eval("tr.job", (rows) => {
-//       return rows.map((row) => {
-//         const title =
-//           row
-//             .querySelector(".company_and_position [itemprop=title]")
-//             ?.textContent?.trim() || "";
-//         const company =
-//           row
-//             .querySelector(".company_and_position .companyLink h3")
-//             ?.textContent?.trim() || "";
-//         const location =
-//           row.querySelector(".location")?.textContent?.trim() || "";
-//         const salary =
-//           row.querySelector(".salary")?.textContent?.trim() || null;
-//         const url =
-//           row.querySelector(".preventLink")?.getAttribute("href") || "";
-//         const logo =
-//           row.querySelector(".logo img")?.getAttribute("src") || null;
-
-//         return { title, company, location, salary, url, logo };
-//       });
-//     });
-
-//     // Fermer le navigateur
-//     await browser.close();
-
-//     // Retourner les résultats sous forme de JSON
-//     return NextResponse.json({
-//       jobs: jobs,
-//     });
-//   } catch (error) {
-//     console.error("Error:", error);
-//     return NextResponse.json(
-//       {
-//         error: "Failed to fetch jobs",
-//       },
-//       { status: 500 }
-//     );
-//   }
-// };
-// export const GET = async (req: Request) => {
-//   // pour démarrer un navigateur sans interface graphique (headless browser) et ouvrir une nouvelle page dans ce navigateur
-//   // Lancer le navigateur
-//   const browser = await chromium.launch();
-//   const page = await browser.newPage(); //Ouverture d'une nouvelle page
-
-//   // Naviguer vers la page web
-//   await page.goto("https://remoteok.com/remote-engineer-jobs?order_by=date");
-
-//   // get the tbody element and  log this content
-//   const contentSite = await page.$eval("tbody", (el) => el.innerHTML);
-//   // console.log(contentSite);
-
-//   return NextResponse.json({
-//     jobs: [],
-//     // contentSite,
-//   });
-// };
 export const GET = async (req: Request) => {
   // pour démarrer un navigateur sans interface graphique (headless browser) et ouvrir une nouvelle page dans ce navigateur
+
   // Lancer le navigateur
   const browser = await chromium.launch();
-  const remotejobs = await getRemoteOkJobs(browser); // pour  1er scrapping
-  const workRemoteJobs = await getWorkRemotlyJobs(browser); //pour le 2eme scrapping
-  // console.log(contentSite);
+
+  const remotejobs = await getRemoteOkJobs(browser); // 1er scrapping
+  const workRemoteJobs = await getWorkRemotlyJobs(browser); // 2eme scrapping
+
+  // recuperation des 2 scrapping
+  const jobs = [...remotejobs, ...workRemoteJobs];
 
   // Filtrer les valeurs undefined
-  const filteredJobs = remotejobs.filter((job) => job !== undefined);
+  const filteredJobs = jobs.filter((job) => job !== undefined);
+
   // on insere les données dans la base de donnée avec createMany au lieu de create ; la méthode createMany pour insérer plusieurs enregistrements.
   if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
     await prisma.jobs.createMany({
@@ -94,7 +31,8 @@ export const GET = async (req: Request) => {
 
   return NextResponse.json({
     // remotejobs,//http://localhost:3000/api/get_jobs
-    workRemoteJobs,
+    // workRemoteJobs,
+    jobs,
   });
 };
 
@@ -202,25 +140,20 @@ const getWorkRemotlyJobs = async (instance: Browser) => {
       const divLogo = row.querySelector(".flag-logo") as HTMLDivElement; // de la div
       if (divLogo) {
         const backgroundImage = divLogo.style.backgroundImage;
-        const img = backgroundImage?.replace("url(", "").replace(")", "");
+        const img = backgroundImage
+          ?.replace("url(", "")
+          .replace(")", "")
+          .replace('"', "");
         obj.logo = img;
       }
 
       //recuperatiino de l'url
-      const url = row.getAttribute("data-url");
-      if (url) {
-        obj.url = "https://remoteok.com" + url;
+      const aElement = row.querySelectorAll("a")[1];
+      if (aElement) {
+        obj.url =
+          "https://weworkremotely.com/" + aElement.getAttribute("href") ?? "";
       }
 
-      // recuperation du salaire
-      const locationElement = row.querySelectorAll(".location");
-      for (const locationElementOne of locationElement) {
-        const location = locationElementOne.textContent?.trim() ?? "";
-        if (location.startsWith("💰")) {
-          //WIN + ; pour les emojie
-          obj.salary = location;
-        }
-      }
       return obj;
     });
   });
