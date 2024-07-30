@@ -1,5 +1,4 @@
 // pages/api/get_jobs.ts
-
 import { NextResponse } from "next/server";
 import { Browser, chromium } from "playwright";
 import { Jobs } from "@prisma/client";
@@ -10,29 +9,42 @@ export const GET = async (req: Request) => {
 
   // Lancer le navigateur
   const browser = await chromium.launch();
+  // -------------------test-------------------
+  const page = await browser.newPage();
+  await page.goto(
+    "https://openclassrooms.com/fr/dashboard/employment/job-postings?learningPaths=185%7CD%C3%A9veloppeur%20Web"
+  );
+  const content = await page.$$eval("#mainContent ul li  ", (rows) =>
+    rows.map((li) => li.innerHTML)
+  );
 
-  const remotejobs = await getRemoteOkJobs(browser); // 1er scrapping
-  const workRemoteJobs = await getWorkRemotlyJobs(browser); // 2eme scrapping
+  //------------------test---------------
+
+  // const remotejobs = await getRemoteOkJobs(browser); // 1er scrapping
+  // const workRemoteJobs = await getWorkRemotlyJobs(browser); // 2eme scrapping
+  // const workOpenClassRoom = await getWorkOpenClassRooms(browser); // 3eme scrapping
 
   // recuperation des 2 scrapping
-  const jobs = [...remotejobs, ...workRemoteJobs];
+  // const jobs = [...remotejobs, ...workRemoteJobs];
+  // const jobs = [...workOpenClassRoom];
 
   // Filtrer les valeurs undefined
-  const filteredJobs = jobs.filter((job) => job !== undefined);
+  // const filteredJobs = jobs.filter((job) => job !== undefined);
 
   // on insere les données dans la base de donnée avec createMany au lieu de create ; la méthode createMany pour insérer plusieurs enregistrements.
-  if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
-    await prisma.jobs.createMany({
-      data: filteredJobs,
-    });
-  } else {
-    console.error("The remotejobs variable is not an array or is empty");
-  }
+  // if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
+  //   await prisma.jobs.createMany({
+  //     data: filteredJobs,
+  //   });
+  // } else {
+  //   console.error("The remotejobs variable is not an array or is empty");
+  // }
 
   return NextResponse.json({
     // remotejobs,//http://localhost:3000/api/get_jobs
     // workRemoteJobs,
-    jobs,
+    // jobs,
+    content,
   });
 };
 
@@ -146,6 +158,69 @@ const getWorkRemotlyJobs = async (instance: Browser) => {
           .replace('"', "");
         obj.logo = img;
       }
+
+      //recuperatiino de l'url
+      const aElement = row.querySelectorAll("a")[1];
+      if (aElement) {
+        obj.url =
+          "https://weworkremotely.com/" + aElement.getAttribute("href") ?? "";
+      }
+
+      return obj;
+    });
+  });
+  // on filtre si les elements sont undefied
+  const JobsFiltered = jobs.filter((job) => {
+    if (!job) return false;
+    if (!job?.title) return false;
+    if (!job?.url) return false;
+    if (!job?.company) return false;
+    return true;
+  });
+  return JobsFiltered;
+};
+const getWorkOpenClassRooms = async (instance: Browser) => {
+  const page = await instance.newPage();
+  await page.goto(
+    "https://openclassrooms.com/fr/dashboard/employment/job-postings?learningPaths=185%7CD%C3%A9veloppeur%20Web"
+  );
+
+  // on cible la class article li  de la page
+  const jobs = await page.$$eval("ul li", (rows) => {
+    return rows.map((row) => {
+      // pour eviter dafficher des pubs on filtre avant
+      // if (row.classList.contains("ad")) return; // on retourne que ce qui contient la classList ad
+      // ligne avec info par defaut a afficher
+      const obj = {
+        title: "",
+        company: "",
+        date: new Date(),
+        // logo: "",
+        salary: "",
+        url: "",
+      } as Jobs; // on se base sur le jobs du schema.prisma
+
+      // recuperation h2 de la page
+      const title = row.querySelector(".title"); // h2 de la page
+      if (title) {
+        obj.title = title.textContent?.trim() ?? "";
+      }
+      // recuperation de la company
+      const company = row.querySelector(".company");
+      if (company) {
+        obj.company = company.textContent?.trim() ?? "";
+      }
+
+      //recuperation de limage (logo)
+      // const divLogo = row.querySelector(".flag-logo") as HTMLDivElement; // de la div
+      // if (divLogo) {
+      //   const backgroundImage = divLogo.style.backgroundImage;
+      //   const img = backgroundImage
+      //     ?.replace("url(", "")
+      //     .replace(")", "")
+      //     .replace('"', "");
+      //   obj.logo = img;
+      // }
 
       //recuperatiino de l'url
       const aElement = row.querySelectorAll("a")[1];
