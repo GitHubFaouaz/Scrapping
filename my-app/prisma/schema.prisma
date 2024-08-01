@@ -19,5 +19,6 @@ model Jobs {
   salary String?
   url String   // pour cliquer sur le lien 
   logo String?
+  img String?
 
 }

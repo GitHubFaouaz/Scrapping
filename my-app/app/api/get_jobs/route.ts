@@ -186,23 +186,39 @@ const getWorkRemotlyJobs = async (instance: Browser) => {
 const getWorkToTheJungle = async (instance: Browser) => {
   const page = await instance.newPage();
   await page.goto(
-    "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur&refinementList%5Boffices.country_code%5D%5B%5D=FR"
+    "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur=FR"
   );
+
+  // Attendez que les éléments soient chargés
+  await page.waitForSelector(".sc-1udkli7-0 ul li .kkKAOM");
 
   // on cible la class article li  de la page
   const jobs = await page.$$eval(".sc-1udkli7-0  ul li .kkKAOM", (rows) =>
-    rows.map((li) => li.innerHTML)
+    // rows.map((li) => li.innerHTML)
+    rows.map((RowLi) => {
+      const obj = {
+        img: "",
+        title: "",
+        company: "",
+        date: new Date(),
+        logo: "",
+        salary: "",
+        url: "",
+      } as Jobs;
+
+      // Attendez que les éléments soient chargés
+
+      const DivImage = RowLi.querySelector(".sc-bXCLTC ");
+      if (DivImage) {
+        const containsImg = DivImage.querySelector("a img");
+        obj.img = containsImg?.getAttribute("src") ?? "";
+      }
+      return obj;
+
+      // const DivLogo = document.querySelectorAll("");
+    })
   );
 
-  // on filtre si les elements sont undefied
-  // const JobsFiltered = jobs.filter((job) => {
-  //   if (!job) return false;
-  //   if (!job?.title) return false;
-  //   if (!job?.url) return false;
-  //   if (!job?.company) return false;
-  //   return true;
-  // });
-  // return JobsFiltered;
   return jobs;
 };
 
