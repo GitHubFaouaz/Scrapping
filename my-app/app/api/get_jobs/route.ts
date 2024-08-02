@@ -203,13 +203,16 @@ const getWorkToTheJungle = async (instance: Browser) => {
     // rows.map((li) => li.innerHTML)
     rows.map((RowLi) => {
       const obj = {
-        img: "",
+        id: "",
+        date: "",
         title: "",
         company: "",
-        date: new Date(),
-        logo: "",
         salary: "",
         url: "",
+        logo: "",
+        img: "",
+        city: "",
+        contract: "",
       } as Jobs;
 
       //containe des elements (image et info)
@@ -241,6 +244,24 @@ const getWorkToTheJungle = async (instance: Browser) => {
           ".sc-1gjh7r6-7 a .sc-fulCBj  "
         );
         obj.title = containTitle?.textContent?.trim() ?? "";
+        // obj.title = containTitle?.innerHTML?.trim() ?? "";
+      }
+
+      //recuperation du salary
+      if (containInfo) {
+        const containTitle = containInfo.querySelector(
+          ".sc-1gjh7r6-7 a .sc-fulCBj  "
+        );
+        obj.title = containTitle?.textContent?.trim() ?? "";
+        // obj.title = containTitle?.innerHTML?.trim() ?? "";
+      }
+
+      // localisation
+      if (containInfo) {
+        const containCity = containInfo.querySelector(
+          ".sc-1gjh7r6-7 .hZOXdq .fYUqim p"
+        );
+        obj.city = containCity?.textContent?.trim() ?? "";
       }
 
       return obj;
