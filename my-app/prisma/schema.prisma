@@ -13,13 +13,14 @@ datasource db {
 model Jobs {
   
   id String   @id @default(cuid())
-  date String //pour la mise a jour 
+  date String 
   title String
   company String
   salary String?
-  url String   // pour cliquer sur le lien 
+  url String   
   logo String?
   img String?
   city String
   contract String
+  typeWork String
 }

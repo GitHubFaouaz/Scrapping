@@ -213,13 +213,14 @@ const getWorkToTheJungle = async (instance: Browser) => {
         img: "",
         city: "",
         contract: "",
+        typeWork: "",
       } as Jobs;
 
       //containe des elements (image et info)
       const grandDivElemnts = RowLi.querySelector(".sc-bXCLTC ");
 
       //containe info(logo title ...)
-      const containInfo = RowLi.querySelector(".sc-bXCLTC .gmdUeC  ");
+      const containInfo = RowLi.querySelector(".sc-bXCLTC .gmdUeC");
 
       //recuperation de l'image
       if (grandDivElemnts) {
@@ -241,13 +242,13 @@ const getWorkToTheJungle = async (instance: Browser) => {
       // recuperation title
       if (containInfo) {
         const containTitle = containInfo.querySelector(
-          ".sc-1gjh7r6-7 a .sc-fulCBj  "
+          ".sc-1gjh7r6-7 a .sc-fulCBj"
         );
         obj.title = containTitle?.textContent?.trim() ?? "";
         // obj.title = containTitle?.innerHTML?.trim() ?? "";
       }
 
-      //recuperation du salary
+      //recuperation du titre
       if (containInfo) {
         const containTitle = containInfo.querySelector(
           ".sc-1gjh7r6-7 a .sc-fulCBj  "
@@ -259,9 +260,25 @@ const getWorkToTheJungle = async (instance: Browser) => {
       // localisation
       if (containInfo) {
         const containCity = containInfo.querySelector(
-          ".sc-1gjh7r6-7 .hZOXdq .fYUqim p"
+          ".sc-1gjh7r6-7 .hZOXdq .fYUqim"
         );
         obj.city = containCity?.textContent?.trim() ?? "";
+      }
+      // type de contrat
+      if (containInfo) {
+        const containContract = containInfo.querySelector(
+          ".eFiCOk .sc-bOhtcR "
+        );
+        obj.contract = containContract?.textContent?.trim() ?? "";
+      }
+
+      // type de travail
+      if (containInfo) {
+        const containTypeWork = containInfo.querySelector(
+          ".eFiCOk .sc-bOhtcR .kbdwqq"
+        );
+        const span = containTypeWork?.getElementsByTagName("span");
+        obj.typeWork = span?.textContent?.trim() ?? "";
       }
 
       return obj;
