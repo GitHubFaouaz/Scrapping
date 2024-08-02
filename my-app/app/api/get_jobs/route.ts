@@ -189,8 +189,11 @@ const getWorkToTheJungle = async (instance: Browser) => {
   //   "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur=FR"
   // );
   await page.goto(
-    "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur&refinementList%5Boffices.country_code%5D%5B%5D=FR&page=1"
+    "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur%20fullstack&refinementList%5Boffices.country_code%5D%5B%5D=FR&page=1"
   );
+  // await page.goto(
+  //   "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur&refinementList%5Boffices.country_code%5D%5B%5D=FR&page=1"
+  // );
 
   // Attendez que les éléments soient chargés
   await page.waitForSelector(".sc-1udkli7-0 ul li .kkKAOM");
@@ -229,8 +232,15 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
       //recuperation compagny
       if (containInfo) {
-        const containCompany = containInfo.querySelector(".fsJUzh .geXsAH   ");
+        const containCompany = containInfo.querySelector(".fsJUzh .geXsAH");
         obj.company = containCompany?.textContent?.trim() ?? "";
+      }
+      // recuperation title
+      if (containInfo) {
+        const containTitle = containInfo.querySelector(
+          ".sc-1gjh7r6-7 a .sc-fulCBj  "
+        );
+        obj.title = containTitle?.textContent?.trim() ?? "";
       }
 
       return obj;
@@ -239,9 +249,6 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
   return jobs;
 };
-
-// avec bright Data(site :https://brightdata.com/cp/zones/scraping_browser_faouaz/access_params) on va pouvoir scrapper pour recuperer les données dautres site
-// pnpm install playwright
 
 //  La méthode trim() en JavaScript est utilisée pour supprimer les espaces blancs au début et à la fin d'une chaîne de caractères. Cela inclut les espaces, les tabulations, les retours à la ligne, etc.
 //  Nettoyage des Données : Garantit que les données extraites sont propres et sans espaces inutiles.
