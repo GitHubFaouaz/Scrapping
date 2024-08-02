@@ -185,8 +185,11 @@ const getWorkRemotlyJobs = async (instance: Browser) => {
 // reception enregistrement des works
 const getWorkToTheJungle = async (instance: Browser) => {
   const page = await instance.newPage();
+  // await page.goto(
+  //   "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur=FR"
+  // );
   await page.goto(
-    "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur=FR"
+    "https://www.welcometothejungle.com/fr/jobs?query=d%C3%A9veloppeur&refinementList%5Boffices.country_code%5D%5B%5D=FR&page=1"
   );
 
   // Attendez que les éléments soient chargés
@@ -206,16 +209,31 @@ const getWorkToTheJungle = async (instance: Browser) => {
         url: "",
       } as Jobs;
 
-      // Attendez que les éléments soient chargés
+      //containe des elements (image et info)
+      const grandDivElemnts = RowLi.querySelector(".sc-bXCLTC ");
 
-      const DivImage = RowLi.querySelector(".sc-bXCLTC ");
-      if (DivImage) {
-        const containsImg = DivImage.querySelector("a img");
+      //containe info(logo title ...)
+      const containInfo = RowLi.querySelector(".sc-bXCLTC .gmdUeC  ");
+
+      //recuperation de l'image
+      if (grandDivElemnts) {
+        const containsImg = grandDivElemnts.querySelector("a img");
         obj.img = containsImg?.getAttribute("src") ?? "";
       }
-      return obj;
 
-      // const DivLogo = document.querySelectorAll("");
+      //recuperation logo
+      if (containInfo) {
+        const containslogo = containInfo.querySelector(".fsJUzh .gdZgow img");
+        obj.logo = containslogo?.getAttribute("src") ?? "";
+      }
+
+      //recuperation compagny
+      if (containInfo) {
+        const containCompany = containInfo.querySelector(".fsJUzh .geXsAH   ");
+        obj.company = containCompany?.textContent?.trim() ?? "";
+      }
+
+      return obj;
     })
   );
 
