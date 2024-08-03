@@ -222,6 +222,11 @@ const getWorkToTheJungle = async (instance: Browser) => {
       //containe info(logo title ...)
       const containInfo = RowLi.querySelector(".sc-bXCLTC .gmdUeC");
 
+      //recuperation id
+      if (grandDivElemnts) {
+        obj.id = grandDivElemnts?.getAttribute("data-object-id") ?? "";
+      }
+
       //recuperation de l'image
       if (grandDivElemnts) {
         const containsImg = grandDivElemnts.querySelector("a img");
@@ -236,16 +241,16 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
       //recuperation compagny
       if (containInfo) {
-        const containCompany = containInfo.querySelector(".fsJUzh .geXsAH");
+        const containCompany = containInfo.querySelector(".fsJUzh ");
         obj.company = containCompany?.textContent?.trim() ?? "";
       }
+
       // recuperation title
       if (containInfo) {
         const containTitle = containInfo.querySelector(
-          ".sc-1gjh7r6-7 a .sc-fulCBj"
+          ".sc-1gjh7r6-7 a .sc-fulCBj .sc-bXCLTC"
         );
-        obj.title = containTitle?.textContent?.trim() ?? "";
-        // obj.title = containTitle?.innerHTML?.trim() ?? "";
+        obj.title = containTitle?.innerHTML?.trim() ?? "";
       }
 
       //recuperation du titre
@@ -274,13 +279,26 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
       // type de travail
       if (containInfo) {
-        const containTypeWork = containInfo.querySelector(
-          ".eFiCOk .sc-bOhtcR .kbdwqq"
+        const containTypeWork = containInfo.querySelectorAll(
+          ".eFiCOk .sc-bOhtcR "
         );
-        const span = containTypeWork?.getElementsByTagName("span");
-        obj.typeWork = span?.textContent?.trim() ?? "";
-      }
+        // pour chaque element du containTypeWork
+        containTypeWork.forEach((element) => {
+          const icon = element.querySelector("i");
+          const text = element.querySelector("span")?.textContent?.trim() ?? "";
 
+          if (icon?.getAttribute("name") === "contract") {
+            obj.contract = text;
+          } else if (icon?.getAttribute("name") === "remote") {
+            obj.typeWork = text;
+          } else if (icon?.getAttribute("name") === "salary") {
+            obj.salary = text;
+            // obj.salary =
+            //   element.querySelector("span")?.textContent?.trim() ??
+            //   "Non spécifié";
+          }
+        });
+      }
       return obj;
     })
   );
