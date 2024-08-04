@@ -15,16 +15,16 @@ export const GET = async (req: Request) => {
   // console.dir(jobs);
 
   // Filtrer les valeurs undefined
-  // const filteredJobs = jobs.filter((job) => job !== undefined);
+  const filteredJobs = jobs.filter((job) => job !== undefined);
 
   // on insere les données dans la base de donnée avec createMany au lieu de create ; la méthode createMany pour insérer plusieurs enregistrements.
-  // if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
-  //   await prisma.jobs.createMany({
-  //     data: filteredJobs,
-  //   });
-  // } else {
-  //   console.error("The remotejobs variable is not an array or is empty");
-  // }
+  if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
+    await prisma.jobs.createMany({
+      data: filteredJobs,
+    });
+  } else {
+    console.error("La variable remotejobs n'est pas un tableau ou est vide");
+  }
 
   return NextResponse.json({
     jobs, //http://localhost:3000/api/get_jobs
@@ -171,14 +171,13 @@ const getWorkToTheJungle = async (instance: Browser) => {
     "https://www.welcometothejungle.com/fr/pages/emploi-developpeur-full-stack-paris-75001"
   );
 
-  // Attendez que les éléments soient chargés
-  await page.waitForSelector(".sc-1udkli7-0 ul li .kkKAOM");
+  // Attendre que les éléments soient chargés
+  https: await page.waitForSelector(".sc-1udkli7-0 ul li .kkKAOM");
 
   // on cible la class .kkKAOM  des li de la page
   const jobs = await page.$$eval(".sc-1udkli7-0  ul li .kkKAOM", (rows) =>
     rows.map((RowLi) => {
       const obj = {
-        id: "",
         date: "",
         title: "",
         company: "",
@@ -196,11 +195,6 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
       //containe info(logo title ...)
       const containInfo = RowLi.querySelector(".sc-bXCLTC .gmdUeC");
-
-      //recuperation id
-      if (grandDivElemnts) {
-        obj.id = grandDivElemnts?.getAttribute("data-object-id") ?? "";
-      }
 
       //recuperation de l'image
       if (grandDivElemnts) {
@@ -236,11 +230,10 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
       // type de contrat, travail , salaire
       if (containInfo) {
-        const containTypeWork = containInfo.querySelectorAll(
-          ".eFiCOk .sc-bOhtcR "
-        );
-        // pour chaque element du containTypeWork
-        containTypeWork.forEach((element) => {
+        const jobDetails = containInfo.querySelectorAll(".hgwOmJ .sc-bOhtcR");
+
+        // pour chaque element du jobDetails
+        jobDetails.forEach((element) => {
           const icon = element.querySelector("i");
           const text = element.querySelector("span")?.textContent?.trim() ?? "";
 
@@ -259,7 +252,7 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
       // recuperation date
       if (containInfo) {
-        const containDate = containInfo.querySelector(".blFqyh");
+        const containDate = containInfo.querySelector(".bdexTn");
         obj.date = containDate?.textContent?.trim() ?? "";
       }
 
