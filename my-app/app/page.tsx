@@ -7,16 +7,17 @@ import {
 } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { CiLocationOn } from "react-icons/ci";
 
 export default async function Home() {
   // on va cherher les jobs enregistrés dans la base de donnée grace a la page route pour les affichés
   const jobs = await prisma.jobs.findMany({
     // Récupérer les enregistrements de db avec une condition sur la date
-    where: {
-      date: {
-        gte: new Date(new Date().setDate(new Date().getDate() - 1)),
-      },
-    },
+    // where: {
+    //   date: {
+    //     gte: new Date(new Date().setDate(new Date().getDate() - 1)),
+    //   },
+    // },
   });
   return (
     <div className="flex flex-col gap-4 max-w-4xl m-auto">
@@ -40,7 +41,7 @@ export default async function Home() {
                   <div className="flex flex-col gap-2">
                     <CardTitle>{j.title}</CardTitle>
                     <CardDescription>
-                      {j.company} - {j.salary}
+                      {j.company} - {j.salary}- <CiLocationOn /> {j.city}
                     </CardDescription>
                   </div>
                 </CardHeader>
