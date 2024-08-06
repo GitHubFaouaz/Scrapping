@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
+import Image from "next/image";
 import Link from "next/link";
 import { CiLocationOn } from "react-icons/ci";
 
@@ -39,6 +40,12 @@ export default async function Home() {
                     </Avatar>
                   </div>
                   <div className="flex flex-col gap-2">
+                    <Image
+                      src={j.img ?? ""}
+                      alt="imageJob"
+                      width={200}
+                      height={100}
+                    />
                     <CardTitle>{j.title}</CardTitle>
                     <CardDescription>
                       {j.company} - {j.salary}- <CiLocationOn /> {j.city}
