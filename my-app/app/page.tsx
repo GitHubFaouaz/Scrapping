@@ -29,8 +29,8 @@ export default async function Home() {
         {jobs.map((j) => (
           <li key={j.id}>
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50">
-                <CardHeader className="flex flex-row gap-4">
+              <Card className="hover:bg-muted/50 flex ">
+                {/* <CardHeader className="flex flex-row gap-4">
                   <div>
                     <Avatar>
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
@@ -51,7 +51,25 @@ export default async function Home() {
                       {j.company} - {j.salary}- <CiLocationOn /> {j.city}
                     </CardDescription>
                   </div>
-                </CardHeader>
+                </CardHeader> */}
+                <div>
+                  <Image
+                    src={j.img ?? ""}
+                    alt="imageJob"
+                    width={200}
+                    height={100}
+                  />
+                </div>
+                <div>
+                  <CardHeader className="flex flex-row gap-4">
+                    <Avatar>
+                      <AvatarFallback>{j.company[0]}</AvatarFallback>
+                      {j.logo ? (
+                        <AvatarImage src={j.logo} alt={j.company} />
+                      ) : null}
+                    </Avatar>
+                  </CardHeader>
+                </div>
               </Card>
             </Link>
           </li>
