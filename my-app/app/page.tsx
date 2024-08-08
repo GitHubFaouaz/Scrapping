@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -9,6 +10,8 @@ import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { CiLocationOn } from "react-icons/ci";
+import { MdHomeWork, MdWork } from "react-icons/md";
+import { PiMoneyWavy } from "react-icons/pi";
 
 export default async function Home() {
   // on va cherher les jobs enregistrés dans la base de donnée grace a la page route pour les affichés
@@ -30,28 +33,6 @@ export default async function Home() {
           <li key={j.id}>
             <Link href={j.url}>
               <Card className="hover:bg-muted/50 flex ">
-                {/* <CardHeader className="flex flex-row gap-4">
-                  <div>
-                    <Avatar>
-                      <AvatarFallback>{j.company[0]}</AvatarFallback>
-                      {j.logo ? (
-                        <AvatarImage src={j.logo} alt={j.company} />
-                      ) : null}
-                    </Avatar>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Image
-                      src={j.img ?? ""}
-                      alt="imageJob"
-                      width={200}
-                      height={100}
-                    />
-                    <CardTitle>{j.title}</CardTitle>
-                    <CardDescription>
-                      {j.company} - {j.salary}- <CiLocationOn /> {j.city}
-                    </CardDescription>
-                  </div>
-                </CardHeader> */}
                 <div>
                   <Image
                     src={j.img ?? ""}
@@ -60,7 +41,8 @@ export default async function Home() {
                     height={100}
                   />
                 </div>
-                <div>
+                <div className="flex flex-col gap-3 ">
+                  {/* <div> */}
                   <CardHeader className="flex flex-row gap-4">
                     <Avatar>
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
@@ -68,7 +50,33 @@ export default async function Home() {
                         <AvatarImage src={j.logo} alt={j.company} />
                       ) : null}
                     </Avatar>
+                    <span>{j.company}</span>
                   </CardHeader>
+                  {/* </div> */}
+                  {/* <div> */}
+                  <CardTitle>{j.title}</CardTitle>
+                  {/* </div> */}
+                  {/* <div> */}
+                  <CardDescription className="">
+                    <span className="flex gap-1 bg-red-400 mr-1 p-1">
+                      <MdWork />
+                      {j.contract}
+                    </span>
+                    <span className="flex bg-red-400 mr-1 p-1">
+                      <MdHomeWork /> {j.typeWork}
+                    </span>
+                    <span className="flex bg-red-400 mr-1 p-1">
+                      <PiMoneyWavy />
+                      {j.salary}
+                    </span>
+                  </CardDescription>
+                  {/* </div> */}
+
+                  <CardFooter>
+                    <span className="flex items-align gap-1">
+                      <CiLocationOn /> {j.city}
+                    </span>
+                  </CardFooter>
                 </div>
               </Card>
             </Link>
