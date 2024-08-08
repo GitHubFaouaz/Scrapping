@@ -9,41 +9,37 @@ import {
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
+import { BsCalendar2Date } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
-import { MdHomeWork, MdWork } from "react-icons/md";
+import { GiNotebook } from "react-icons/gi";
+import { MdHomeWork } from "react-icons/md";
 import { PiMoneyWavy } from "react-icons/pi";
 
 export default async function Home() {
   // on va cherher les jobs enregistrés dans la base de donnée grace a la page route pour les affichés
   const jobs = await prisma.jobs.findMany({
     // Récupérer les enregistrements de db avec une condition sur la date
-    // where: {
-    //   date: {
-    //     gte: new Date(new Date().setDate(new Date().getDate() - 1)),
-    //   },
-    // },
   });
   return (
     <div className="flex flex-col gap-4 max-w-4xl m-auto">
       <h1 className="bg-gradient-to-r from-blue-600 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl">
         RemoteJobsFinder
       </h1>
-      <ul className="flex flex-col gap-2 ">
+      <ul className="flex flex-wrap gap-2 ">
         {jobs.map((j) => (
-          <li key={j.id}>
+          <li key={j.id} className="w-[49%]">
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50 flex ">
+              <Card className="hover:bg-muted/50 flex flex-col ">
                 <div>
-                  <Image
+                  <img
                     src={j.img ?? ""}
-                    alt="imageJob"
-                    width={200}
-                    height={100}
+                    alt="imgJob"
+                    className="w-full h-full object-cover"
+                    // className="w-[90%] h-full object-cover"
                   />
                 </div>
-                <div className="flex flex-col gap-3 ">
-                  {/* <div> */}
-                  <CardHeader className="flex flex-row gap-4">
+                <div className="flex flex-col gap-2 w-[100%] ">
+                  <CardHeader className="flex flex-row gap-4 p-2">
                     <Avatar>
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
                       {j.logo ? (
@@ -52,29 +48,30 @@ export default async function Home() {
                     </Avatar>
                     <span>{j.company}</span>
                   </CardHeader>
-                  {/* </div> */}
-                  {/* <div> */}
-                  <CardTitle>{j.title}</CardTitle>
-                  {/* </div> */}
-                  {/* <div> */}
-                  <CardDescription className="">
-                    <span className="flex gap-1 bg-red-400 mr-1 p-1">
-                      <MdWork />
+
+                  <CardTitle className="p-2">{j.title}</CardTitle>
+
+                  <CardDescription className="flex p-2">
+                    <span className="flex items-center gap-1 bg-red-400 mr-1 p-1">
+                      <GiNotebook />
                       {j.contract}
                     </span>
-                    <span className="flex bg-red-400 mr-1 p-1">
+                    <span className="flex items-center bg-red-400 mr-1 p-1">
                       <MdHomeWork /> {j.typeWork}
                     </span>
-                    <span className="flex bg-red-400 mr-1 p-1">
+                    <span className="flex items-center bg-red-400 mr-1 p-1">
                       <PiMoneyWavy />
                       {j.salary}
                     </span>
                   </CardDescription>
-                  {/* </div> */}
 
-                  <CardFooter>
-                    <span className="flex items-align gap-1">
+                  <CardFooter className="flex justify-between p-2">
+                    <span className="flex  items-center gap-1">
                       <CiLocationOn /> {j.city}
+                    </span>
+                    <span className="flex  items-center gap-1">
+                      <BsCalendar2Date />
+                      {j.date}
                     </span>
                   </CardFooter>
                 </div>
