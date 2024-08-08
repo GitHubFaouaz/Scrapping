@@ -34,7 +34,7 @@ export default async function Home() {
                   <img
                     src={j.img ?? ""}
                     alt="imgJob"
-                    className="w-full h-full object-cover"
+                    className="w-full h-[200px]  object-cover"
                     // className="w-[90%] h-full object-cover"
                   />
                 </div>
@@ -49,7 +49,7 @@ export default async function Home() {
                     <span>{j.company}</span>
                   </CardHeader>
 
-                  <CardTitle className="p-2">{j.title}</CardTitle>
+                  <CardTitle className="p-2 text-[20px]">{j.title}</CardTitle>
 
                   <CardDescription className="flex p-2">
                     <span className="flex items-center gap-1 bg-red-400 mr-1 p-1">
