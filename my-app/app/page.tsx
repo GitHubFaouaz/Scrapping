@@ -21,15 +21,17 @@ export default async function Home() {
     // Récupérer les enregistrements de db avec une condition sur la date
   });
   return (
-    <div className="flex flex-col gap-4 max-w-4xl m-auto">
-      <h1 className="bg-gradient-to-r from-blue-600 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl">
+    // <div className="flex flex-col gap-4 max-w-4xl m-auto">
+    <div className="flex flex-col gap-4  m-auto items-center">
+      <h1 className="bg-gradient-to-r from-blue-600 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl ">
         RemoteJobsFinder
       </h1>
-      <ul className="flex flex-wrap gap-2 ">
+      {/* <ul className="flex flex-wrap gap-2 "> */}
+      <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto">
         {jobs.map((j) => (
-          <li key={j.id} className="w-[49%]">
+          <li key={j.id} className="">
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50 flex flex-col ">
+              <Card className="hover:bg-muted/50 flex flex-col h-full">
                 <div>
                   <img
                     src={j.img ?? ""}
@@ -64,15 +66,15 @@ export default async function Home() {
                       {j.salary}
                     </span>
                   </CardDescription>
-
+                  <span className="flex  items-center gap-1">
+                    <CiLocationOn /> {j.city}
+                  </span>
                   <CardFooter className="flex justify-between p-2">
-                    <span className="flex  items-center gap-1">
-                      <CiLocationOn /> {j.city}
-                    </span>
                     <span className="flex  items-center gap-1">
                       <BsCalendar2Date />
                       {j.date}
                     </span>
+                    <span className="flex  items-center gap-1">dec</span>
                   </CardFooter>
                 </div>
               </Card>
