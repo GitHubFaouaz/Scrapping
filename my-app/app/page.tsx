@@ -51,7 +51,9 @@ export default async function Home() {
                     <span>{j.company}</span>
                   </CardHeader>
 
-                  <CardTitle className="p-2 text-[20px]">{j.title}</CardTitle>
+                  <CardTitle className="p-2 text-[20px] h-[60px]">
+                    {j.title}
+                  </CardTitle>
 
                   <CardDescription className="flex p-2">
                     <span className="flex items-center gap-1 bg-red-400 mr-1 p-1">
