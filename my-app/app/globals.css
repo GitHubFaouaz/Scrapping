@@ -76,8 +76,12 @@
   }
 }
 
-@layer components {
-  .custom-border-bl-radius {
-    border-bottom-left-radius: 10%;
-  }
+/* @layer components { */
+.custom-border-bl-radius {
+  border-bottom-left-radius: 30%;
+  /* background: aqua; */
 }
+.customm {
+  background: aqua;
+}
+/* } */

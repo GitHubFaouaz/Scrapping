@@ -40,8 +40,8 @@ export default async function Home() {
                     // className="w-[90%] h-full object-cover"
                   />
                 </div>
-                <div className="flex flex-col gap-2 w-[100%] relative bg-[#000] custom-border-bl-radius">
-                  <div className="w-[5%] bg-red-500 absolute left-0 h-full custom-border-bl-radius"></div>
+                <div className="flex flex-col gap-2 w-[100%] relative bg-[#000] customm">
+                  <div className="w-[5%] bg-red-500 absolute left-0 h-full custom-border-bl-radius "></div>
                   <CardHeader className="flex flex-row gap-4 p-2">
                     <Avatar>
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
