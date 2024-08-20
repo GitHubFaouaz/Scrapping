@@ -29,9 +29,9 @@ export default async function Home() {
       {/* <ul className="flex flex-wrap gap-2 "> */}
       <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto">
         {jobs.map((j) => (
-          <li key={j.id} className="">
+          <li key={j.id} className="h-[490px]">
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50 flex flex-col h-full">
+              <Card className="hover:bg-muted/50 flex flex-col h-full customLi">
                 <div>
                   <img
                     src={j.img ?? ""}
@@ -40,8 +40,8 @@ export default async function Home() {
                     // className="w-[90%] h-full object-cover"
                   />
                 </div>
-                <div className="flex flex-col gap-2 w-[100%] relative bg-[#000] customm">
-                  <div className="w-[5%] bg-red-500 absolute left-0 h-full custom-border-bl-radius "></div>
+                <div className="flex flex-col gap-2 w-[100%] relative bg-[#000] h-full rounded-bl-[10px] ">
+                  <div className="w-[5%] bg-[#425561] absolute left-0 h-full rounded-bl-[10px] "></div>
                   <CardHeader className="flex flex-row gap-4 p-2">
                     <Avatar>
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
@@ -72,7 +72,7 @@ export default async function Home() {
                   <span className="flex  items-center gap-1">
                     <CiLocationOn /> {j.city}
                   </span>
-                  <CardFooter className="flex justify-between p-2">
+                  <CardFooter className="flex justify-between p-2 mt-[1rem]">
                     <span className="flex  items-center gap-1">
                       <BsCalendar2Date />
                       {j.date}

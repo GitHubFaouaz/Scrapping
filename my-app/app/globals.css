@@ -77,11 +77,13 @@
 }
 
 /* @layer components { */
-.custom-border-bl-radius {
-  border-bottom-left-radius: 30%;
+.customBarre {
+  border-bottom-left-radius: 10px;
   /* background: aqua; */
 }
-.customm {
-  background: aqua;
+.customLi {
+  /* background: repeating-radial-gradient(black, aqua 140px); */
+  box-shadow: -2px 2px 0 #26434a, -4px 4px 0 #000, -6px 6px 0 #0cf,
+    -8px 8px 0 #000, -18px 18px 20px #000;
 }
 /* } */
