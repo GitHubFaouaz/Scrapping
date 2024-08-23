@@ -27,6 +27,7 @@ export default async function Home() {
         RemoteJobsFinder
       </h1>
       {/* <ul className="flex flex-wrap gap-2 "> */}
+      {/* <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto"> */}
       <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto">
         {jobs.map((j) => (
           <li key={j.id} className="h-[490px]">
