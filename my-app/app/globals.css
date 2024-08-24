@@ -77,13 +77,16 @@
 }
 
 /* @layer components { */
+.customLi {
+  box-shadow: -2px 2px 0 #26434a, -4px 4px 0 #000, -6px 6px 0 #0cf,
+    -8px 8px 0 #000, -18px 18px 20px #000;
+  /* background-color: rgb(66 85 97 / var(--tw-bg-opacity)); */
+}
 .customBarre {
   border-bottom-left-radius: 10px;
   /* background: aqua; */
 }
-.customLi {
-  /* background: repeating-radial-gradient(black, aqua 140px); */
-  box-shadow: -2px 2px 0 #26434a, -4px 4px 0 #000, -6px 6px 0 #0cf,
-    -8px 8px 0 #000, -18px 18px 20px #000;
+.customContaineElement {
+  background: linear-gradient(to top, black, #4d6170);
 }
 /* } */

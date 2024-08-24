@@ -27,7 +27,6 @@ export default async function Home() {
         RemoteJobsFinder
       </h1>
       {/* <ul className="flex flex-wrap gap-2 "> */}
-      {/* <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto"> */}
       <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto">
         {jobs.map((j) => (
           <li key={j.id} className="h-[490px]">
@@ -41,7 +40,7 @@ export default async function Home() {
                     // className="w-[90%] h-full object-cover"
                   />
                 </div>
-                <div className="flex flex-col gap-2 w-[100%] relative bg-[#000] h-full rounded-bl-[10px] ">
+                <div className="flex flex-col gap-2 w-[100%] relative h-full rounded-bl-[10px] customContaineElement ">
                   <div className="w-[5%] bg-[#425561] absolute left-0 h-full rounded-bl-[10px] "></div>
                   <CardHeader className="flex flex-row gap-4 p-2">
                     <Avatar>
@@ -57,7 +56,7 @@ export default async function Home() {
                     {j.title}
                   </CardTitle>
 
-                  <CardDescription className="flex p-2">
+                  <CardDescription className="flex p-2 z-10">
                     <span className="flex items-center gap-1 bg-red-400 mr-1 p-1">
                       <GiNotebook />
                       {j.contract}
@@ -70,10 +69,10 @@ export default async function Home() {
                       {j.salary}
                     </span>
                   </CardDescription>
-                  <span className="flex  items-center gap-1">
+                  <span className="flex  items-center gap-1 z-10">
                     <CiLocationOn /> {j.city}
                   </span>
-                  <CardFooter className="flex justify-between p-2 mt-[1rem]">
+                  <CardFooter className="flex justify-between p-2 mt-[1rem] z-10">
                     <span className="flex  items-center gap-1">
                       <BsCalendar2Date />
                       {j.date}
