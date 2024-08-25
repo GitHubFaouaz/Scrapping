@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BsCalendar2Date } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
+import { FaQuoteRight } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
 import { MdHomeWork } from "react-icons/md";
 import { PiMoneyWavy } from "react-icons/pi";
@@ -29,9 +30,9 @@ export default async function Home() {
       {/* <ul className="flex flex-wrap gap-2 "> */}
       <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto">
         {jobs.map((j) => (
-          <li key={j.id} className="h-[490px]">
+          <li key={j.id} className="h-[490px] customLi">
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50 flex flex-col h-full customLi">
+              <Card className="hover:bg-muted/50 flex flex-col h-full shadow-[0_0_10px_black;] ">
                 <div>
                   <img
                     src={j.img ?? ""}
@@ -40,7 +41,7 @@ export default async function Home() {
                     // className="w-[90%] h-full object-cover"
                   />
                 </div>
-                <div className="flex flex-col gap-2 w-[100%] relative h-full rounded-bl-[10px] customContaineElement ">
+                <div className="flex flex-col gap-2 w-[100%] relative h-full rounded-bl-[10px] pl-5 customContaineElement">
                   <div className="w-[5%] bg-[#425561] absolute left-0 h-full rounded-bl-[10px] "></div>
                   <CardHeader className="flex flex-row gap-4 p-2">
                     <Avatar>
@@ -77,7 +78,9 @@ export default async function Home() {
                       <BsCalendar2Date />
                       {j.date}
                     </span>
-                    <span className="flex  items-center gap-1">dec</span>
+                    <span className="flex  items-center gap-1  ">
+                      <FaQuoteRight className=" text-[#425561]" />
+                    </span>
                   </CardFooter>
                 </div>
               </Card>
