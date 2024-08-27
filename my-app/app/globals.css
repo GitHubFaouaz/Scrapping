@@ -77,6 +77,12 @@
 }
 
 /* @layer components { */
+.customH1 {
+  background: url(https://media.giphy.com/media/3ohhwEZqxzKbNUHzji/giphy.gif)
+    center/cover; /*cover ainsi il prend toute la place */
+  -webkit-background-clip: text; /*ainsi le backgroundn n'est pas en fount decran arrier mais en font decrant dans le text'*/
+  color: transparent; /*le color doit etre transparent pour laisser voir le background car il est par defaut blanc */
+}
 .customLi {
   /* background: linear-gradient(to top, black, #4d6170); */
   border-radius: 5px;
@@ -88,4 +94,5 @@
 .customContaineElement {
   background: linear-gradient(to top, black, #4d6170);
 }
+
 /* } */
