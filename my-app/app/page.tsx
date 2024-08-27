@@ -28,9 +28,9 @@ export default async function Home() {
         RemoteJobsFinder
       </h1>
       {/* <ul className="flex flex-wrap gap-2 "> */}
-      <ul className="grid grid-cols-3 gap-4 max-w-[1200px] m-auto">
+      <ul className="grid grid-cols-3 gap-3  max-w-[1200px] m-auto">
         {jobs.map((j) => (
-          <li key={j.id} className="h-[490px] customLi">
+          <li key={j.id} className=" bg-[#4d6170] p-1.5 rounded-[5px] relative">
             <Link href={j.url}>
               <Card className="hover:bg-muted/50 flex flex-col h-full shadow-[0_0_10px_black;] ">
                 <div>
@@ -43,14 +43,14 @@ export default async function Home() {
                 </div>
                 <div className="flex flex-col gap-2 w-[100%] relative h-full rounded-bl-[10px] pl-5 customContaineElement">
                   <div className="w-[5%] bg-[#425561] absolute left-0 h-full rounded-bl-[10px] "></div>
-                  <CardHeader className="flex flex-row gap-4 p-2">
-                    <Avatar>
+                  <CardHeader className="flex flex-row gap-4 p-2 min-h-[70px] items-center">
+                    <Avatar className="absolute left-[-15px] border-[3px] border-solid border-[#000] ">
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
                       {j.logo ? (
                         <AvatarImage src={j.logo} alt={j.company} />
                       ) : null}
                     </Avatar>
-                    <span>{j.company}</span>
+                    <span className="pl-1">{j.company}</span>
                   </CardHeader>
 
                   <CardTitle className="p-2 text-[20px] h-[60px] z-10">

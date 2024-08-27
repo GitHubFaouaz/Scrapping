@@ -78,7 +78,7 @@
 
 /* @layer components { */
 .customLi {
-  background: linear-gradient(to top, black, #4d6170);
+  /* background: linear-gradient(to top, black, #4d6170); */
   border-radius: 5px;
   padding: 7px 7px;
 }
