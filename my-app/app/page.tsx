@@ -24,7 +24,8 @@ export default async function Home() {
   return (
     // <div className="flex flex-col gap-4 max-w-4xl m-auto">
     <div className="flex flex-col gap-4  m-auto items-center">
-      <h1 className="bg-gradient-to-r from-blue-600 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl ">
+      {/* <h1 className="bg-gradient-to-r from-blue-600 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl "> */}
+      <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl ">
         RemoteJobsFinder
       </h1>
       {/* <ul className="flex flex-wrap gap-2 "> */}
