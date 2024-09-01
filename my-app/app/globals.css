@@ -36,8 +36,7 @@
   }
 
   .dark {
-    /* --background: 222.2 84% 4.9%; */
-    --background: 0 0 0;
+    --background: #000;
     --foreground: 210 40% 98%;
 
     --card: 222.2 84% 4.9%;
@@ -73,6 +72,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(90deg, #4d6170, #000, #000, #000, #4d6170);
   }
 }
 
