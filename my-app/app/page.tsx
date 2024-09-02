@@ -25,11 +25,11 @@ export default async function Home() {
     // <div className="flex flex-col gap-4 max-w-4xl m-auto">
     <div className="flex flex-col gap-4  m-auto items-center">
       {/* <h1 className="bg-gradient-to-r from-blue-600 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl "> */}
-      <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl ">
+      <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170]  text-8xl ">
         RemoteJobsFinder
       </h1>
       {/* <ul className="flex flex-wrap gap-2 "> */}
-      <ul className="grid grid-cols-3 gap-3  max-w-[1200px] m-auto">
+      <ul className="grid grid-cols-3 gap-3  max-w-[1200px] m-auto p-[10px] customUl">
         {jobs.map((j) => (
           <li key={j.id} className=" bg-[#4d6170] p-1.5 rounded-[5px] relative">
             <Link href={j.url}>
@@ -54,25 +54,25 @@ export default async function Home() {
                     <span className="pl-1">{j.company}</span>
                   </CardHeader>
 
-                  <CardTitle className="p-2 text-[20px] h-[60px] z-10">
+                  <CardTitle className="p-2 mb-2 text-[20px] h-[60px] z-10">
                     {j.title}
                   </CardTitle>
 
                   <CardDescription className="flex p-2 z-10">
-                    <span className="flex items-center gap-1 bg-red-400 mr-1 p-1">
+                    <span className="flex items-center gap-1  bg-[#4d6170] mr-1 p-1  text-[#fff]">
                       <GiNotebook />
                       {j.contract}
                     </span>
-                    <span className="flex items-center bg-red-400 mr-1 p-1">
+                    <span className="flex items-center  bg-[#4d6170] mr-1 p-1  text-[#fff]">
                       <MdHomeWork /> {j.typeWork}
                     </span>
-                    <span className="flex items-center bg-red-400 mr-1 p-1">
+                    <span className="flex items-center bg-[#4d6170] mr-1 p-1 text-[#fff]">
                       <PiMoneyWavy />
                       {j.salary}
                     </span>
                   </CardDescription>
                   <span className="flex  items-center gap-1 z-10">
-                    <CiLocationOn /> {j.city}
+                    <CiLocationOn className=" text-[#fff]" /> {j.city}
                   </span>
                   <CardFooter className="flex justify-between p-2 mt-[1rem] z-10">
                     <span className="flex  items-center gap-1">
