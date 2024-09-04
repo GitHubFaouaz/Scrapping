@@ -22,18 +22,18 @@ export default async function Home() {
     // Récupérer les enregistrements de db avec une condition sur la date
   });
   return (
-    // <div className="flex flex-col gap-4 max-w-4xl m-auto">
     <div className="flex flex-col gap-4  m-auto items-center">
-      {/* <h1 className="bg-gradient-to-r from-blue-600 via-red-500 to-indigo-400 inline-block text-transparent bg-clip-text text-8xl "> */}
       <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170]  text-8xl ">
         RemoteJobsFinder
       </h1>
-      {/* <ul className="flex flex-wrap gap-2 "> */}
       <ul className="grid grid-cols-3 gap-3  max-w-[1200px] m-auto p-[10px] customUl">
         {jobs.map((j) => (
-          <li key={j.id} className=" bg-[#4d6170] p-1.5 rounded-[5px] relative">
+          <li
+            key={j.id}
+            className=" bg-[#4d6170] p-1.5 rounded-[5px] relative hover:rounded-[15px] transition-[2s] transition-border-radius"
+          >
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50 flex flex-col h-full shadow-[0_0_10px_black;] ">
+              <Card className="hover:bg-muted/50 flex flex-col h-full shadow-[0_0_10px_black] hover:shadow-[0_0_0px_5px_black] ">
                 <div>
                   <img
                     src={j.img ?? ""}
