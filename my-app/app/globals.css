@@ -76,7 +76,6 @@
   }
 }
 
-/* @layer components { */
 .customH1 {
   text-shadow: -2px 2px 0 #20c6cf, -8px 8px 0 #4d6170, -18px 18px 20px #4d6170;
 }
@@ -94,5 +93,6 @@
 .customContaineElement {
   background: linear-gradient(to top, black, #4d6170);
 }
-
-/* } */
+.customTransition {
+  transition: 1s;
+}

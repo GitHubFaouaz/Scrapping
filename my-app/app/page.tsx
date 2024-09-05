@@ -30,10 +30,10 @@ export default async function Home() {
         {jobs.map((j) => (
           <li
             key={j.id}
-            className=" bg-[#4d6170] p-1.5 rounded-[5px] relative hover:rounded-[15px] transition-[2s] transition-border-radius"
+            className=" bg-[#4d6170] p-1.5 rounded-[5px] relative hover:rounded-[15px] customTransition"
           >
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50 flex flex-col h-full shadow-[0_0_10px_black] hover:shadow-[0_0_0px_5px_black] ">
+              <Card className="hover:bg-muted/50 flex flex-col h-full shadow-[0_0_10px_black] hover:shadow-[0_0_0px_3px_#000] customTransition">
                 <div>
                   <img
                     src={j.img ?? ""}
