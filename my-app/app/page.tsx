@@ -30,10 +30,10 @@ export default async function Home() {
         {jobs.map((j) => (
           <li
             key={j.id}
-            className=" bg-[#4d6170] p-1.5 rounded-[5px] relative hover:rounded-[15px] customTransition"
+            className=" bg-[#4d6170] p-1.5 rounded-[5px] relative "
           >
             <Link href={j.url}>
-              <Card className="hover:bg-muted/50 flex flex-col h-full shadow-[0_0_10px_black] hover:shadow-[0_0_0px_3px_#000] customTransition">
+              <Card className=" flex flex-col h-full shadow-[0_0_10px_black]  ">
                 <div>
                   <img
                     src={j.img ?? ""}
@@ -43,7 +43,7 @@ export default async function Home() {
                   />
                 </div>
                 <div className="flex flex-col gap-2 w-[100%] relative h-full rounded-bl-[10px] pl-5 customContaineElement">
-                  <div className="w-[5%] bg-[#425561] absolute left-0 h-full rounded-bl-[10px] "></div>
+                  <div className="customBarre customTransition w-[5%] bg-[#425561] absolute left-0 h-full rounded-bl-[10px] "></div>
                   <CardHeader className="flex flex-row gap-4 p-2 min-h-[70px] items-center">
                     <Avatar className="absolute left-[-15px] border-[3px] border-solid border-[#000] ">
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
@@ -80,7 +80,7 @@ export default async function Home() {
                       {j.date}
                     </span>
                     <span className="flex  items-center gap-1  ">
-                      <FaQuoteRight className=" text-[#425561]" />
+                      <FaQuoteRight className="customFaQuoteRight customTransition  text-[#425561]" />
                     </span>
                   </CardFooter>
                 </div>
