@@ -15,7 +15,11 @@ export const GET = async (req: Request) => {
   // console.dir(jobs);
 
   // Filtrer les valeurs undefined
-  const filteredJobs = jobs.filter((job) => job !== undefined);
+  // const filteredJobs = jobs.filter((job) => job !== undefined);
+  const filteredJobs = jobs.filter((job) => {
+    if (!job.title) return false;
+    return true;
+  });
 
   // on insere les données dans la base de donnée avec createMany au lieu de create ; la méthode createMany pour insérer plusieurs enregistrements.
   if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
