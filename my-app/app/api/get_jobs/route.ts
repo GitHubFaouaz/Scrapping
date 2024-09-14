@@ -12,160 +12,41 @@ export const GET = async (req: Request) => {
   const workWelwomToTheJungle = await getWorkToTheJungle(browser);
 
   const jobs = [...workWelwomToTheJungle];
+
   // console.dir(jobs);
 
   // Filtrer les valeurs undefined
-  // const filteredJobs = jobs.filter((job) => job !== undefined);
-  const filteredJobs = jobs.filter((job) => {
-    if (!job.title) return false;
-    return true;
-  });
+  const filteredJobs = jobs.filter((job) =>
+    job.company == ""
+      ? console.log("pas de donnéé")
+      : prisma.jobs.createMany({
+          // data: filteredJobs,
+          data: jobs,
+        })
+  );
 
   // on insere les données dans la base de donnée avec createMany au lieu de create ; la méthode createMany pour insérer plusieurs enregistrements.
-  if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
-    await prisma.jobs.createMany({
-      data: filteredJobs,
-    });
-  } else {
-    console.error("La variable remotejobs n'est pas un tableau ou est vide");
-  }
+
+  // if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
+  //   await prisma.jobs.createMany({
+  //     data: filteredJobs,
+  //   });
+  // } else {
+  //   console.error("La variable remotejobs n'est pas un tableau ou est vide");
+  // }
+  // if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
+  //   await prisma.jobs.createMany({
+  //     data: filteredJobs,
+  //   });
+  // } else {
+  //   console.error("La variable remotejobs n'est pas un tableau ou est vide");
+  // }
 
   return NextResponse.json({
-    jobs, //http://localhost:3000/api/get_jobs
+    // jobs, //http://localhost:3000/api/get_jobs
+    filteredJobs,
   });
 };
-
-//------------------------------------------------ 1er scrapping(https://remoteok.com/)
-// const getRemoteOkJobs = async (instance: Browser) => {
-//   const page = await instance.newPage();
-//   await page.goto("https://remoteok.com/remote-engineer-jobs?order_by=date");
-
-//   // on cible le tr de la page remoteok.com
-//   const jobs = await page.$$eval("tr", (rows) => {
-//     return rows.map((row) => {
-//       // pour eviter dafficher des pubs on filtre avant
-//       if (row.classList.contains("ad")) return; // on retourne que ce qui contient la classList ad
-//       // ligne avec info par defaut a afficher
-//       const obj = {
-//         title: "",
-//         company: "",
-//         date: new Date(),
-//         logo: "",
-//         salary: "",
-//         url: "",
-//       } as Jobs; // on se base sur le jobs du schema.prisma
-
-//       // recuperation h2 de la page
-//       const h2Title = row.querySelector("h2"); // h2 de la page
-//       if (h2Title) {
-//         obj.title = h2Title.textContent?.trim() ?? "";
-//       }
-//       // recuperation de la company
-//       const company = row.querySelector("h2");
-//       if (company) {
-//         obj.company = company.textContent?.trim() ?? "";
-//       }
-
-//       //recuperation de limage
-//       const divLogo = row.querySelector(".has-logo"); // dans balise td
-//       if (divLogo) {
-//         const img = divLogo.querySelector("img");
-//         obj.logo = img?.getAttribute("src") ?? ""; // on envoi img et si nul ''
-//       }
-
-//       //recuperatiino de l'url
-//       const url = row.getAttribute("data-url");
-//       if (url) {
-//         obj.url = "https://remoteok.com" + url;
-//       }
-
-//       // recuperation du salaire
-//       const locationElement = row.querySelectorAll(".location");
-//       for (const locationElementOne of locationElement) {
-//         const location = locationElementOne.textContent?.trim() ?? "";
-//         if (location.startsWith("💰")) {
-//           //WIN + ; pour les emojie
-//           obj.salary = location;
-//         }
-//       }
-//       return obj;
-//     });
-//   });
-//   // on filtre si les elements sont undefied
-//   const JobsFiltered = jobs.filter((job) => {
-//     if (!job) return false;
-//     if (!job?.title) return false;
-//     if (!job?.url) return false;
-//     if (!job?.company) return false;
-//     return true;
-//   });
-//   return JobsFiltered;
-// };
-
-//------------------------------------------ 2reme scrapping (https://weworkremotely.com/)
-// const getWorkRemotlyJobs = async (instance: Browser) => {
-//   const page = await instance.newPage();
-//   await page.goto(
-//     "https://weworkremotely.com/categories/remote-full-stack-programming-jobs#job-listings"
-//   );
-
-//   // on cible la class article li  de la page
-//   const jobs = await page.$$eval("article li", (rows) => {
-//     return rows.map((row) => {
-//       // pour eviter dafficher des pubs on filtre avant
-//       if (row.classList.contains("ad")) return; // on retourne que ce qui contient la classList ad
-//       // ligne avec info par defaut a afficher
-//       const obj = {
-//         title: "",
-//         company: "",
-//         date: new Date(),
-//         logo: "",
-//         salary: "",
-//         url: "",
-//       } as Jobs; // on se base sur le jobs du schema.prisma
-
-//       // recuperation h2 de la page
-//       const title = row.querySelector(".title"); // h2 de la page
-//       if (title) {
-//         obj.title = title.textContent?.trim() ?? "";
-//       }
-//       // recuperation de la company
-//       const company = row.querySelector(".company");
-//       if (company) {
-//         obj.company = company.textContent?.trim() ?? "";
-//       }
-
-//       //recuperation de limage (logo)
-//       const divLogo = row.querySelector(".flag-logo") as HTMLDivElement; // de la div
-//       if (divLogo) {
-//         const backgroundImage = divLogo.style.backgroundImage;
-//         const img = backgroundImage
-//           ?.replace("url(", "")
-//           .replace(")", "")
-//           .replace('"', "");
-//         obj.logo = img;
-//       }
-
-//       //recuperatiino de l'url
-//       const aElement = row.querySelectorAll("a")[1];
-//       if (aElement) {
-//         obj.url =
-//           "https://weworkremotely.com/" + aElement.getAttribute("href") ?? "";
-//       }
-
-//       return obj;
-//     });
-//   });
-//   // on filtre si les elements sont undefied
-//   const JobsFiltered = jobs.filter((job) => {
-//     if (!job) return false;
-//     if (!job?.title) return false;
-//     if (!job?.url) return false;
-//     if (!job?.company) return false;
-//     return true;
-//   });
-//   return JobsFiltered;
-// };
 
 // reception enregistrement des works
 const getWorkToTheJungle = async (instance: Browser) => {

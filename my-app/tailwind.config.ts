@@ -60,8 +60,8 @@ const config = {
       },
       keyframes: {
         barre: {
-          from: { background: "red" },
-          to: { background: " #20c6cf" },
+          from: { translate: " 0 35px", opacity: "0" },
+          to: { translate: "0 0px", opacity: "1" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
@@ -69,7 +69,7 @@ const config = {
         },
       },
       animation: {
-        barre: "barre 2s ease-out infinite",
+        barre: "barre 2s ease-out ",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },

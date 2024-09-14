@@ -23,11 +23,14 @@ export default async function Home() {
   });
   return (
     <div className="flex flex-col gap-4  m-auto items-center">
-      <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170]  text-8xl ">
+      <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170] animate-bounce  text-8xl ">
         RemoteJobsFinder
       </h1>
       <ul className="grid grid-cols-3 gap-3  max-w-[1200px] m-auto p-[10px] customUl">
         {jobs.map((j) => (
+          // j.company === "" ? (
+          //   <li key={j.id} className="hidden"></li>
+          // ) : (
           <li
             key={j.id}
             className=" bg-[#4d6170] p-1.5 rounded-[5px] relative customTransition    "
@@ -53,7 +56,7 @@ export default async function Home() {
                     <span className="pl-1">{j.company}</span>
                   </CardHeader>
 
-                  <CardTitle className="p-2 mb-2 text-[20px] h-[60px] z-10">
+                  <CardTitle className="p-2 mb-2 text-[20px] h-[60px] z-10  animate-barre">
                     {j.title}
                   </CardTitle>
 
