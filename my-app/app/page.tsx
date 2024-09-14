@@ -28,9 +28,6 @@ export default async function Home() {
       </h1>
       <ul className="grid grid-cols-3 gap-3  max-w-[1200px] m-auto p-[10px] customUl">
         {jobs.map((j) => (
-          // j.company === "" ? (
-          //   <li key={j.id} className="hidden"></li>
-          // ) : (
           <li
             key={j.id}
             className=" bg-[#4d6170] p-1.5 rounded-[5px] relative customTransition    "
@@ -56,22 +53,30 @@ export default async function Home() {
                     <span className="pl-1">{j.company}</span>
                   </CardHeader>
 
-                  <CardTitle className="p-2 mb-2 text-[20px] h-[60px] z-10  animate-barre">
+                  <CardTitle className="p-2 mb-4 text-[18px] h-[60px] z-10  animate-barre">
                     {j.title}
                   </CardTitle>
 
                   <CardDescription className="flex p-2 z-10">
-                    <span className="flex items-center gap-1  bg-[#4d6170] mr-1 p-1  text-[#fff]">
-                      <GiNotebook />
-                      {j.contract}
-                    </span>
-                    <span className="flex items-center  bg-[#4d6170] mr-1 p-1  text-[#fff]">
-                      <MdHomeWork /> {j.typeWork}
-                    </span>
-                    <span className="flex items-center bg-[#4d6170] mr-1 p-1 text-[#fff]">
-                      <PiMoneyWavy />
-                      {j.salary}
-                    </span>
+                    {j.contract !== "" && (
+                      <span className="flex items-center gap-1  bg-[#4d6170] mr-1 p-1  text-[#fff]">
+                        <GiNotebook />
+                        {j.contract}
+                      </span>
+                    )}
+
+                    {j.typeWork !== "" && (
+                      <span className="flex items-center  bg-[#4d6170] mr-1 p-1  text-[#fff]">
+                        <MdHomeWork /> {j.typeWork}
+                      </span>
+                    )}
+
+                    {j.salary !== "" && (
+                      <span className="flex items-center bg-[#4d6170] mr-1 p-1 text-[#fff]">
+                        <PiMoneyWavy />
+                        {j.salary}
+                      </span>
+                    )}
                   </CardDescription>
                   <span className="flex  items-center gap-1 z-10">
                     <CiLocationOn className=" text-[#fff]" /> {j.city}

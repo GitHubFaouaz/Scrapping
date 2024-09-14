@@ -18,9 +18,8 @@ export const GET = async (req: Request) => {
   // Filtrer les valeurs undefined
   const filteredJobs = jobs.filter((job) =>
     job.company == ""
-      ? console.log("pas de donnéé")
+      ? console.log("pas de donnée")
       : prisma.jobs.createMany({
-          // data: filteredJobs,
           data: jobs,
         })
   );
@@ -43,7 +42,6 @@ export const GET = async (req: Request) => {
   // }
 
   return NextResponse.json({
-    // jobs, //http://localhost:3000/api/get_jobs
     filteredJobs,
   });
 };
@@ -128,9 +126,6 @@ const getWorkToTheJungle = async (instance: Browser) => {
             obj.typeWork = text;
           } else if (icon?.getAttribute("name") === "salary") {
             obj.salary = text;
-            // obj.salary =
-            //   element.querySelector("span")?.textContent?.trim() ??
-            //   "Non spécifié";
           }
         });
       }
