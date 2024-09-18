@@ -66,13 +66,13 @@ export default async function Home() {
                     )}
 
                     {j.typeWork !== "" && (
-                      <span className="flex items-center  bg-[#4d6170] mr-1 p-1  text-[#fff]">
+                      <span className="flex items-center gap-1 bg-[#4d6170] mr-1 p-1  text-[#fff]">
                         <MdHomeWork /> {j.typeWork}
                       </span>
                     )}
 
                     {j.salary !== "" && (
-                      <span className="flex items-center bg-[#4d6170] mr-1 p-1 text-[#fff]">
+                      <span className="flex items-center gap-1 bg-[#4d6170] mr-1 p-1 text-[#fff]">
                         <PiMoneyWavy />
                         {j.salary}
                       </span>
@@ -99,16 +99,3 @@ export default async function Home() {
     </div>
   );
 }
-
-// where : Ce champ permet de définir des conditions de filtrage pour la requête. Les enregistrements qui répondent aux conditions spécifiées seront retournés. where n'est pas une obligation dans une requête Prisma,Sans where, la requête renverra tous les enregistrements du modèle spécifié.
-
-// date : C'est le champ de la table jobs sur lequel vous appliquez la condition.
-
-// gte : C'est un opérateur Prisma qui signifie "greater than or equal" (plus grand ou égal à). Il est utilisé pour comparer des valeurs.
-
-// new Date(new Date().setDate(new Date().getDate() - 1)) :
-
-// new Date() : Crée un objet Date représentant la date et l'heure actuelles.
-// new Date().getDate() : Récupère le jour du mois (1-31) de la date actuelle.
-// new Date().setDate(new Date().getDate() - 1) : Définit la date à un jour avant la date actuelle.
-// new Date() : Convertit le timestamp en un objet Date.
