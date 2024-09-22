@@ -26,7 +26,7 @@ export default async function Home() {
       <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170] animate-bounce  text-8xl ">
         RemoteJobsFinder
       </h1>
-      <ul className="grid grid-cols-3 gap-3  max-w-[1200px] m-auto p-[10px] customUl">
+      <ul className="flex flex-col lg:grid grid-cols-3 gap-3  max-w-[1200px] m-auto p-[10px] customUl">
         {jobs.map((j) => (
           <li
             key={j.id}
