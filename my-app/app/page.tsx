@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import Image from "next/image";
 import Link from "next/link";
 import { BsCalendar2Date } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
@@ -18,9 +17,7 @@ import { PiMoneyWavy } from "react-icons/pi";
 
 export default async function Home() {
   // on va cherher les jobs enregistrés dans la base de donnée grace a la page route pour les affichés
-  const jobs = await prisma.jobs.findMany({
-    // Récupérer les enregistrements de db avec une condition sur la date
-  });
+  const jobs = await prisma.jobs.findMany({});
   return (
     <div className="flex flex-col gap-4  m-auto items-center">
       <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170] animate-bounce  text-8xl ">
@@ -30,10 +27,10 @@ export default async function Home() {
         {jobs.map((j) => (
           <li
             key={j.id}
-            className=" bg-[#4d6170] p-1.5 rounded-[5px] relative customTransition    "
+            className=" bg-[#4d6170] p-1.5 rounded-[5px] relative customTransition "
           >
             <Link href={j.url}>
-              <Card className=" flex flex-col h-full shadow-[0_0_10px_black]  ">
+              <Card className=" flex flex-col h-full shadow-[0_0_10px_black]">
                 <div>
                   <img
                     src={j.img ?? ""}
@@ -43,8 +40,8 @@ export default async function Home() {
                 </div>
                 <div className="flex flex-col gap-2 w-[100%] relative h-full rounded-bl-[10px] pl-5 customContaineElement">
                   <div className="customBarre customTransition   w-[5%] bg-[#425561] absolute left-0 h-full rounded-bl-[10px] "></div>
-                  <CardHeader className="flex flex-row gap-4 p-2 min-h-[70px] items-center">
-                    <Avatar className="absolute left-[-15px] border-[3px] border-solid border-[#000] ">
+                  <CardHeader className="flex flex-row gap-4 p-2 min-h-[70px] z-10  items-center">
+                    <Avatar className="absolute left-[-15px] border-[3px]  border-solid border-[#000] ">
                       <AvatarFallback>{j.company[0]}</AvatarFallback>
                       {j.logo ? (
                         <AvatarImage src={j.logo} alt={j.company} />

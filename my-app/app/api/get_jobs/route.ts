@@ -13,8 +13,6 @@ export const GET = async (req: Request) => {
 
   const jobs = [...workWelwomToTheJungle];
 
-  // console.dir(jobs);
-
   // Filtrer les valeurs undefined
   const filteredJobs = jobs.filter((job) =>
     job.company == ""
@@ -23,23 +21,6 @@ export const GET = async (req: Request) => {
           data: jobs,
         })
   );
-
-  // on insere les données dans la base de donnée avec createMany au lieu de create ; la méthode createMany pour insérer plusieurs enregistrements.
-
-  // if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
-  //   await prisma.jobs.createMany({
-  //     data: filteredJobs,
-  //   });
-  // } else {
-  //   console.error("La variable remotejobs n'est pas un tableau ou est vide");
-  // }
-  // if (Array.isArray(filteredJobs) && filteredJobs.length > 0) {
-  //   await prisma.jobs.createMany({
-  //     data: filteredJobs,
-  //   });
-  // } else {
-  //   console.error("La variable remotejobs n'est pas un tableau ou est vide");
-  // }
 
   return NextResponse.json({
     filteredJobs,
@@ -150,11 +131,3 @@ const getWorkToTheJungle = async (instance: Browser) => {
 
   return jobs;
 };
-
-//  La méthode trim() en JavaScript est utilisée pour supprimer les espaces blancs au début et à la fin d'une chaîne de caractères. Cela inclut les espaces, les tabulations, les retours à la ligne, etc.
-//  Nettoyage des Données : Garantit que les données extraites sont propres et sans espaces inutiles.
-// Préparation des Données : Facilite la comparaison et la manipulation des chaînes de caractères, car les espaces blancs superflus peuvent entraîner des erreurs ou des comportements inattendus.
-// let str3 = "\ntext with new line characters\n"; => console.log(str3.trim());  //"text with new line characters"
-
-// Utilisez create :Lorsque vous insérez un seul enregistrement.
-// Utilisez createMany :Lorsque vous insérez plusieurs enregistrements en même temps pour améliorer la performance.
