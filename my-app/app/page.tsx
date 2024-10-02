@@ -30,7 +30,7 @@ export default async function Home() {
             className=" bg-[#4d6170] p-1.5 rounded-[5px] relative customTransition "
           >
             <Link href={j.url}>
-              <Card className=" flex flex-col h-full shadow-[0_0_10px_black]">
+              <Card className=" flex flex-col h-full shadow-[0_0_10px_black]  animate-barre">
                 <div>
                   <img
                     src={j.img ?? ""}
@@ -50,7 +50,7 @@ export default async function Home() {
                     <span className="pl-1">{j.company}</span>
                   </CardHeader>
 
-                  <CardTitle className="p-2 mb-4 text-[18px] h-[60px] z-10  animate-barre">
+                  <CardTitle className="p-2 mb-4 text-[18px] h-[60px] z-10 ">
                     {j.title}
                   </CardTitle>
 
