@@ -124,7 +124,6 @@ const getWorkToTheJungle = async (instance: Browser) => {
           "https://www.welcometothejungle.com" +
             containLink?.getAttribute("href") ?? "";
       }
-
       return obj;
     })
   );
