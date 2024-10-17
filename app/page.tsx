@@ -20,7 +20,7 @@ export default async function Home() {
   const jobs = await prisma.jobs.findMany({});
   return (
     <div className="flex flex-col gap-4  m-auto items-center">
-      <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170] animate-bounce  text-8xl ">
+      <h1 className="customH1 via-red-500 to-indigo-400 inline-block text-[#4d6170]   text-8xl ">
         RemoteJobsFinder
       </h1>
       <ul className="flex flex-col lg:grid grid-cols-3 gap-3  max-w-[1200px] m-auto p-[10px] customUl">
